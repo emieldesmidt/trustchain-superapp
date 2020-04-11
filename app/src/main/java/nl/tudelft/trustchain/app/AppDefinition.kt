@@ -7,6 +7,7 @@ import nl.tudelft.trustchain.FOC.MainActivityFOC
 import nl.tudelft.trustchain.common.R
 import nl.tudelft.trustchain.debug.DebugActivity
 import nl.tudelft.trustchain.explorer.ui.TrustChainExplorerActivity
+import nl.tudelft.trustchain.voting.VotingActivity
 
 enum class AppDefinition(
     @DrawableRes val icon: Int,
@@ -32,4 +33,10 @@ enum class AppDefinition(
         R.color.blue,
         MainActivityFOC::class.java
     ),
+    VOTING(
+        R.drawable.abc_ic_voice_search_api_material,
+        "VOTING",
+        R.color.dark_gray,
+        VotingActivity::class.java
+    )
 }
