@@ -7,7 +7,6 @@ import nl.tudelft.trustchain.FOC.MainActivityFOC
 import nl.tudelft.trustchain.common.R
 import nl.tudelft.trustchain.debug.DebugActivity
 import nl.tudelft.trustchain.explorer.ui.TrustChainExplorerActivity
-import nl.tudelft.trustchain.voting.VotingActivity
 
 enum class AppDefinition(
     @DrawableRes val icon: Int,

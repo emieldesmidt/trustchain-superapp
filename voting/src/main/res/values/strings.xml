@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="voting_application">Voting application</string>
+    <string name="new_block">New Block</string>
 </resources>
