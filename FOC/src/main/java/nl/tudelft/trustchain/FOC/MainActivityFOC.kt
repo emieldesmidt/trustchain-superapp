@@ -117,11 +117,15 @@ class MainActivityFOC : AppCompatActivity() {
                 spinner.onItemSelectedListener = object :
                     AdapterView.OnItemSelectedListener {
                     override fun onNothingSelected(parent: AdapterView<*>?) {
-                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
                     }
 
-                    override fun onItemSelected(parent: AdapterView<*>,
-                                                view: View, position: Int, id: Long) {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>,
+                        view: View,
+                        position: Int,
+                        id: Long
+                    ) {
                         selectedProp = availableProps[position]
                     }
                 }
@@ -133,9 +137,6 @@ class MainActivityFOC : AppCompatActivity() {
             }
 
             builder.show()
-
-
-
         }
 
         retrieveListButton.setOnClickListener { _ ->

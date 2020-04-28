@@ -309,7 +309,7 @@ class VotingHelper(
                     it.publicKey.contentEquals(myPublicKey.keyToBin()) &&
 
                     // The proposal has been accepted
-                    votingIsComplete(it, 1 ) //TODO fix this threshold thing
+                    votingIsComplete(it, 75)
             }
 
         return successFileProps.map { getVoteBlockAttributesByKey(it, "VOTE_SUBJECT") }
