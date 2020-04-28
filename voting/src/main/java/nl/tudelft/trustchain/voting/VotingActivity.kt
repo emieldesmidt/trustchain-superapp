@@ -33,8 +33,6 @@ class VotingActivity : AppCompatActivity() {
     private var voteProposals: MutableList<TrustChainBlock> = mutableListOf()
     private var displayAllVotes: Boolean = true
 
-    private val threshold = 1
-
     /**
      * Setup method, binds functionality
      */
@@ -160,7 +158,7 @@ class VotingActivity : AppCompatActivity() {
      * Make user aware of proposal status through toast message.
      */
     private fun showVoteCompletenessToast(block: TrustChainBlock) {
-        val completed = vh.votingIsComplete(block, threshold)
+        val completed = vh.votingIsComplete(block, VotingCommunity.threshold)
         if (completed) {
             printShortToast("Voting has been completed.")
         } else {
@@ -236,7 +234,7 @@ class VotingActivity : AppCompatActivity() {
                     "<br><br>" +
                     "<small><b>" + (if (vh.votingIsComplete(
                         block,
-                        threshold
+                        VotingCommunity.threshold
                     )
                 ) "Final result" else "Current tally") + "</b>:" +
                     "<br>" +
