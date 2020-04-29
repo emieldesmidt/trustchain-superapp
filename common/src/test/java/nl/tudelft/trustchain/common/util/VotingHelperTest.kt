@@ -537,7 +537,7 @@ class VotingHelperTest {
     }
 
     @Test
-    fun testProposeFOCFile() {
+    fun testProposeFOCFileNoPass() {
 
         val community = spyk(getCommunity())
         val votingHelper = VotingHelper(community)
@@ -565,7 +565,39 @@ class VotingHelperTest {
         // Vote and thus make the threshold.
         votingHelper.respondToProposal(true, propBlock)
 
-        // Verify that the proposal file has been accepted
+        // Verify that the proposal file has not been accepted
+        Assert.assertFalse(votingHelper.successfulFileProposals().contains(voteSubject))
+    }
+
+    @Test
+    fun testProposeFOCFilePass() {
+
+        val community = spyk(getCommunity())
+        val votingHelper = VotingHelper(community)
+
+        // Launch proposition
+        val voteSubject = "path/to/file.txt"
+        val voteList = JSONArray(arrayListOf(community.myPeer.publicKey.keyToBin().toHex()))
+        val voteJSON = JSONObject()
+            .put("VOTE_PROPOSER", community.myPeer.publicKey.keyToBin().toHex())
+            .put("VOTE_SUBJECT", voteSubject)
+            .put("VOTE_LIST", voteList)
+            .put("FOC_FILE", true)
+            .put("VOTE_MODE", VotingMode.THRESHOLD)
+
+        val transaction = voteJSON.toString()
+
+        // Start the vote.
+        val propBlock = community.createProposalBlock(
+            "voting_block",
+            mapOf("message" to transaction),
+            EMPTY_PK
+        )
+
+        // Vote and thus make the threshold.
+        votingHelper.respondToProposal(true, propBlock)
+
+        // Verify that the proposal file has not been accepted
         Assert.assertTrue(votingHelper.successfulFileProposals().contains(voteSubject))
     }
 }
