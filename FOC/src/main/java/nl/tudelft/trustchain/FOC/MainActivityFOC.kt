@@ -133,7 +133,8 @@ class MainActivityFOC : AppCompatActivity() {
 
             val button = dialogView.findViewById<Button>(R.id.button)
             button.setOnClickListener { _ ->
-                createTorrent(selectedProp)
+                enterTorrent?.setText(selectedProp)
+                createTorrent()
             }
 
             builder.show()
@@ -407,13 +408,13 @@ class MainActivityFOC : AppCompatActivity() {
     The extension of the file must be included (for example, .png)
      */
     @Suppress("deprecation")
-    fun createTorrent(fileName: String) {
-//        val fileName: String?
-//        val inputText = enterTorrent.text.toString()
-//        if (inputText == "") {
-//            printToast("No torrent name given, using default")
-//            fileName = "image.png"
-//        } else fileName = inputText
+    fun createTorrent() {
+        val fileName: String?
+        val inputText = enterTorrent.text.toString()
+        if (inputText == "") {
+            printToast("No torrent name given, using default")
+            fileName = "image.png"
+        } else fileName = inputText
 
         val file =
             File(Environment.getExternalStorageDirectory().absolutePath + "/" + fileName)
