@@ -142,7 +142,7 @@ class VotingActivity : AppCompatActivity() {
             peers.add(community.myPeer.publicKey)
 
             // Start voting procedure
-            vh.startVote(proposal, peers, votingMode, focProp)
+            vh.createProposal(proposal, peers, votingMode, focProp)
             printShortToast("Proposal has been created")
         }
 
@@ -258,19 +258,19 @@ class VotingActivity : AppCompatActivity() {
             when (votingMode) {
                 VotingMode.YESNO -> {
                     builder.setPositiveButton("YES") { _, _ ->
-                        vh.respondToVote(true, block)
+                        vh.respondToProposal(true, block)
                         printShortToast("You voted: YES")
                     }
 
                     builder.setNegativeButton("NO") { _, _ ->
-                        vh.respondToVote(false, block)
+                        vh.respondToProposal(false, block)
                         printShortToast("You voted: NO")
                     }
                 }
 
                 VotingMode.THRESHOLD -> {
                     builder.setPositiveButton("AGREE") { _, _ ->
-                        vh.respondToVote(true, block)
+                        vh.respondToProposal(true, block)
                         printShortToast("You voted: AGREE")
                     }
                 }
@@ -321,9 +321,20 @@ class VotingActivity : AppCompatActivity() {
      */
     private fun proposalListUpdate() {
         val currentProposals = tch.getBlocksByType("voting_block").filter {
-            !JSONObject(it.transaction["message"].toString()).has("VOTE_REPLY") && displayBlock(
-                it
-            )
+
+            // Only the original proposal blocks.
+            !JSONObject(it.transaction["message"].toString()).has("VOTE_REPLY") &&
+
+                // Only those that you are eligible for
+                vh.getVoters(it).any { key ->
+                    key.pub().keyToBin()
+                        .contentEquals(community.myPeer.publicKey.keyToBin())
+                } &&
+
+                // Take display mode into consideration
+                displayBlock(
+                    it
+                )
         }.asReversed()
 
         // Update vote proposal set
